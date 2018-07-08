@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="">
+  <meta name="generator" content="Hugo 0.42.2" />
+
+  <title>Code Generation in Swift: Part 1 &middot; Josh&#39;s Tech Blog</title>
+
+  
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/pure-min.css">
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-old-ie-min.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/pure/1.0.0/grids-responsive-min.css">
+  <!--<![endif]-->
+
+  <!--[if lte IE 8]>
+  <link rel="stylesheet" href="yhkaplan.github.io/css/side-menu-old-ie.css">
+  <![endif]-->
+  <!--[if gt IE 8]><!-->
+  <link rel="stylesheet" href="yhkaplan.github.io/css/side-menu.css">
+  <!--<![endif]-->
+
+  <link rel="stylesheet" href="yhkaplan.github.io/css/blackburn.css">
+
+  
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  
+  <link href="https://fonts.googleapis.com/css?family=Raleway" rel="stylesheet" type="text/css">
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.1/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+
+ 
+  
+
+  
+  <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/androidstudio.min.css">
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+  
+  <script src="//cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/languages/yaml.min.js"></script>
+  
+  <script>hljs.initHighlightingOnLoad();</script>
+  
+
+  <link rel="shortcut icon" href="yhkaplan.github.ioimg/favicon.ico" type="image/x-icon" />
+
+  
+    
+        <link rel="stylesheet" href="yhkaplan.github.iocss/my.css">
+    
+  
+  
+    
+        <script src="yhkaplan.github.iojs/my.js"></script>
+    
+  
+
+</head>
+
+
+<body>
+<div id="layout">
+
+  
+<a href="#menu" id="menuLink" class="menu-link">
+  
+  <span></span>
+</a>
+<div id="menu">
+
+  
+  <a class="pure-menu-heading brand" href="yhkaplan.github.io/">Blackburn</a>
+
+
+  <div class="pure-menu">
+    <ul class="pure-menu-list">
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="yhkaplan.github.io/"><i class='fa fa-home fa-fw'></i>Home</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="yhkaplan.github.io/post/"><i class='fa fa-list fa-fw'></i>Posts</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="yhkaplan.github.io/about/"><i class='fa fa-user fa-fw'></i>About</a>
+      
+        </li>
+      
+      
+        <li class="pure-menu-item">
+          <a class="pure-menu-link" href="yhkaplan.github.io/contact/"><i class='fa fa-phone fa-fw'></i>Contact</a>
+      
+        </li>
+      
+    </ul>
+  </div>
+
+  <div class="pure-menu social">
+  <ul class="pure-menu-list">
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://twitter.com/*" target="_blank"><i class="fa fa-twitter-square fa-fw"></i>Twitter</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="http://slideshare.net/*" target="_blank"><i class="fa fa-slideshare fa-fw"></i>SlideShare</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://github.com/yhkaplan" target="_blank"><i class="fa fa-github-square fa-fw"></i>GitHub</a>
+    </li>
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://stackoverflow.com/users/*" target="_blank"><i class="fa fa-stack-overflow fa-fw"></i>Stack Overflow</a>
+    </li>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <li class="pure-menu-item">
+      <a class="pure-menu-link" href="https://keybase.io/*" target="_blank"><i class="fa fa-key fa-fw"></i>Keybase</a>
+    </li>
+    
+
+  </ul>
+</div>
+
+
+  <div>
+  <div class="small-print">
+    <small></small>
+  </div>
+  <div class="small-print">
+    <small>Built with&nbsp;<a href="https://gohugo.io/" target="_blank">Hugo</a></small>
+    <small>Theme&nbsp;<a href="https://github.com/yoshiharuyamashita/blackburn" target="_blank">Blackburn</a></small>
+  </div>
+</div>
+
+</div>
+
+
+  <div id="main">
+
+
+<div class="header">
+  <h1>Code Generation in Swift: Part 1</h1>
+  <h2></h2>
+</div>
+<div class="content">
+
+  <div class="post-meta">
+
+  <div>
+    <i class="fa fa-calendar fa-fw"></i>
+    <time>07 Jul 2018, 12:18</time>
+  </div>
+
+  
+
+  
+
+  
+  
+  
+  <div>
+    <i class="fa fa-tags fa-fw"></i>
+    
+      <a class="post-taxonomy-tag" href="yhkaplan.github.iotags/getting-started">Getting started</a>
+    
+  </div>
+  
+  
+
+</div>
+
+  
+
+<p>This entry is the first in a series that I plan on writing about code generation in Swift.</p>
+
+<h2 id="example">Example</h2>
+
+<h3 id="code">Code</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">public</span> <span style="color:#66d9ef">struct</span> <span style="color:#a6e22e">LowerLabelSettings</span>: Label, Equatable {
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">var</span> text: String?
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">var</span> layout: LowerLabelLayout
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">var</span> textSettings: TextSettings
+
+    <span style="color:#66d9ef">public</span> <span style="color:#66d9ef">init</span>(
+        text: String? = <span style="color:#66d9ef">nil</span>,
+        layout: LowerLabelLayout = LowerLabelLayout(),
+        textSettings: TextSettings = TextSettings()
+    ) {
+        <span style="color:#66d9ef">self</span>.text = text
+        <span style="color:#66d9ef">self</span>.layout = layout
+        <span style="color:#66d9ef">self</span>.textSettings = textSettings
+    }
+}</code></pre></div>
+<h3 id="generated-code">Generated Code</h3>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift"><span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Quick</span>
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Nimble</span>
+@testable <span style="color:#66d9ef">import</span> <span style="color:#a6e22e">MoonWalker</span>
+
+<span style="color:#66d9ef">class</span> <span style="color:#a6e22e">LowerLabelLayoutTests</span>: QuickSpec {
+
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">spec</span>() {
+
+        describe(<span style="color:#e6db74">&#34;LowerLabelLayoutTests&#34;</span>) {
+
+            <span style="color:#66d9ef">let</span> leadingConstant = generateRandomCGFloat()
+            <span style="color:#66d9ef">let</span> trailingConstant = generateRandomCGFloat()
+            <span style="color:#66d9ef">let</span> bottomConstant = generateRandomCGFloat()
+            <span style="color:#66d9ef">let</span> height = generateRandomCGFloat()
+
+            <span style="color:#66d9ef">let</span> sut = LowerLabelLayout(
+                leadingConstant: leadingConstant, trailingConstant: trailingConstant, bottomConstant: bottomConstant, height: height
+            )
+
+            it(<span style="color:#e6db74">&#34;leadingConstant is set&#34;</span>) {
+                <span style="color:#66d9ef">let</span> expected = leadingConstant
+                <span style="color:#66d9ef">let</span> tested = sut.leadingConstant
+
+                expect(tested).to(equal(expected))
+            }
+
+            it(<span style="color:#e6db74">&#34;trailingConstant is set&#34;</span>) {
+                <span style="color:#66d9ef">let</span> expected = trailingConstant
+                <span style="color:#66d9ef">let</span> tested = sut.trailingConstant
+
+                expect(tested).to(equal(expected))
+            }
+
+            it(<span style="color:#e6db74">&#34;bottomConstant is set&#34;</span>) {
+                <span style="color:#66d9ef">let</span> expected = bottomConstant
+                <span style="color:#66d9ef">let</span> tested = sut.bottomConstant
+
+                expect(tested).to(equal(expected))
+            }
+
+            it(<span style="color:#e6db74">&#34;height is set&#34;</span>) {
+                <span style="color:#66d9ef">let</span> expected = height
+                <span style="color:#66d9ef">let</span> tested = sut.height
+
+                expect(tested).to(equal(expected))
+            }
+
+        }
+    }
+}</code></pre></div>
+<h3 id="template">Template</h3>
+
+<p><a href="https://github.com/yhkaplan/MoonWalker/blob/master/Templates/AutoTestable.stencil">https://github.com/yhkaplan/MoonWalker/blob/master/Templates/AutoTestable.stencil</a></p>
+<div class="highlight"><pre style="color:#f8f8f2;background-color:#272822;-moz-tab-size:4;-o-tab-size:4;tab-size:4"><code class="language-swift" data-lang="swift">{<span style="color:#f92672">%</span> macro declareProperties variables <span style="color:#f92672">%</span>}
+    {<span style="color:#f92672">%</span> <span style="color:#66d9ef">for</span> variable <span style="color:#66d9ef">in</span> variables <span style="color:#66d9ef">where</span> variable.readAccess <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;private&#34;</span> and variable.readAccess <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;fileprivate&#34;</span> <span style="color:#f92672">%</span>}
+         {<span style="color:#f92672">%</span> <span style="color:#66d9ef">if</span> variable.typeName<span style="color:#f92672">|</span>contains:<span style="color:#e6db74">&#34;String&#34;</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = <span style="color:#e6db74">&#34;test {{variable.name}}&#34;</span>
+         {<span style="color:#f92672">%</span> elif variable.typeName<span style="color:#f92672">|</span>contains:<span style="color:#e6db74">&#34;CGFloat&#34;</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = generateRandomCGFloat()
+         {<span style="color:#f92672">%</span> elif variable.typeName<span style="color:#f92672">|</span>contains:<span style="color:#e6db74">&#34;UIFont&#34;</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = UIFont.boldSystemFont(ofSize: <span style="color:#ae81ff">20.0</span>)
+         {<span style="color:#f92672">%</span> elif variable.typeName<span style="color:#f92672">|</span>contains:<span style="color:#e6db74">&#34;UIColor&#34;</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = UIColor.green
+         {<span style="color:#f92672">%</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">%</span>}
+            {<span style="color:#f92672">%</span> <span style="color:#66d9ef">if</span> variable.typeName<span style="color:#f92672">|</span>contains:<span style="color:#e6db74">&#34;UIView?&#34;</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = UIView()
+            {<span style="color:#f92672">%</span> elif variable.typeName<span style="color:#f92672">|</span>contains:<span style="color:#e6db74">&#34;UIImage?&#34;</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = UIImage()
+            {<span style="color:#f92672">%</span> <span style="color:#66d9ef">else</span> <span style="color:#f92672">%</span>}
+            <span style="color:#66d9ef">let</span> {{variable.name}} = {{variable.typeName}}()
+            {<span style="color:#f92672">%</span> endif <span style="color:#f92672">%</span>}
+         {<span style="color:#f92672">%</span> endif <span style="color:#f92672">%</span>}
+    {<span style="color:#f92672">%</span> endfor <span style="color:#f92672">%</span>}
+{<span style="color:#f92672">%</span> endmacro <span style="color:#f92672">%</span>}
+
+{<span style="color:#f92672">%</span> macro declareTests variables <span style="color:#f92672">%</span>}
+    {<span style="color:#f92672">%</span> <span style="color:#66d9ef">for</span> variable <span style="color:#66d9ef">in</span> variables <span style="color:#66d9ef">where</span> variable.readAccess <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;private&#34;</span> and variable.readAccess <span style="color:#f92672">!=</span> <span style="color:#e6db74">&#34;fileprivate&#34;</span> <span style="color:#f92672">%</span>}
+            it(<span style="color:#e6db74">&#34;{{variable.name}} is set&#34;</span>) {
+                <span style="color:#66d9ef">let</span> expected = {{variable.name}}
+                <span style="color:#66d9ef">let</span> tested = sut.{{variable.name}}
+
+                expect(tested).to(equal(expected))
+            }
+
+    {<span style="color:#f92672">%</span> endfor <span style="color:#f92672">%</span>}
+{<span style="color:#f92672">%</span> endmacro <span style="color:#f92672">%</span>}
+
+{<span style="color:#f92672">%</span> macro filloutInit variables <span style="color:#f92672">%</span>}
+                {<span style="color:#f92672">%</span> map type.storedVariables into parameters using <span style="color:#66d9ef">var</span> <span style="color:#f92672">%</span>}{{ <span style="color:#66d9ef">var</span>.name }}: {{ <span style="color:#66d9ef">var</span>.name }}{<span style="color:#f92672">%</span> endmap <span style="color:#f92672">%</span>}
+                {{ parameters<span style="color:#f92672">|</span>join:<span style="color:#e6db74">&#34;, &#34;</span> }}
+{<span style="color:#f92672">%</span> endmacro <span style="color:#f92672">%</span>}
+
+{<span style="color:#f92672">%</span> <span style="color:#66d9ef">for</span> type <span style="color:#66d9ef">in</span> types.types<span style="color:#f92672">|!</span><span style="color:#66d9ef">enum</span> <span style="color:#a6e22e">where</span> type.implements.AutoTestable or type<span style="color:#f92672">|</span>annotated:<span style="color:#e6db74">&#34;AutoTestable&#34;</span> <span style="color:#f92672">%</span>}
+<span style="color:#75715e">// sourcery:file:Generated/{{ type.name }}Tests</span>
+<span style="color:#75715e">// </span><span style="color:#75715e">MARK:</span><span style="color:#75715e"> - {{ type.name }}Tests</span>
+
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Quick</span>
+<span style="color:#66d9ef">import</span> <span style="color:#a6e22e">Nimble</span>
+@testable <span style="color:#66d9ef">import</span> <span style="color:#a6e22e">MoonWalker</span>
+
+<span style="color:#66d9ef">class</span> {{type.name}}Tests: QuickSpec {
+
+    <span style="color:#66d9ef">override</span> <span style="color:#66d9ef">func</span> <span style="color:#a6e22e">spec</span>() {
+
+        describe(<span style="color:#e6db74">&#34;{{type.name}}Tests&#34;</span>) {
+
+            {<span style="color:#f92672">%</span> call declareProperties type.storedVariables <span style="color:#f92672">%</span>}
+
+            <span style="color:#66d9ef">let</span> sut = {{type.name}}(
+                {<span style="color:#f92672">%</span> call filloutInit type.storedVariables <span style="color:#f92672">%</span>}
+            )
+
+            {<span style="color:#f92672">%</span> call declareTests type.storedVariables <span style="color:#f92672">%</span>}
+        }
+    }
+}
+<span style="color:#75715e">// sourcery:end</span>
+{<span style="color:#f92672">%</span> endfor <span style="color:#f92672">%</span>}</code></pre></div>
+<h2 id="tools">Tools</h2>
+
+<h2 id="starting-points">Starting Points</h2>
+
+<h2 id="coming-up">Coming Up</h2>
+
+
+  
+
+
+  
+<div id="disqus_thread"></div>
+<script type="text/javascript">
+
+(function() {
+    
+    
+    if (window.location.hostname == "localhost")
+        return;
+
+    var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+    var disqus_shortname = 'Your Disqus shortname';
+    dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+    (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+})();
+</script>
+<noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+<a href="http://disqus.com/" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+
+
+</div>
+
+</div>
+</div>
+<script src="yhkaplan.github.iojs/ui.js"></script>
+
+
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'Your Google Analytics tracking ID', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+
+
+
+<script type="text/javascript">
+  var _paq = _paq || [];
+  _paq.push(['trackPageView']);
+  _paq.push(['enableLinkTracking']);
+  (function() {
+    var u="\/\/analytics.example.com\/";
+    _paq.push(['setTrackerUrl', u+'piwik.php']);
+    _paq.push(['setSiteId',  2 ]);
+    var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
+    g.type='text/javascript'; g.async=true; g.defer=true; g.src=u+'piwik.js'; s.parentNode.insertBefore(g,s);
+  })();
+</script>
+<noscript><p><img src="//analytics.example.com/piwik.php?idsite=2" style="border:0;" alt="" /></p></noscript>
+
+
+
+</body>
+</html>
+

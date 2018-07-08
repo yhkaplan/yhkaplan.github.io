@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes" ?>
+<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
+  <channel>
+    <title>Josh&#39;s Tech Blog</title>
+    <link>yhkaplan.github.io/</link>
+    <description>Recent content on Josh&#39;s Tech Blog</description>
+    <generator>Hugo -- gohugo.io</generator>
+    <language>en-us</language>
+    <lastBuildDate>Sat, 07 Jul 2018 12:18:28 +0900</lastBuildDate>
+    
+	<atom:link href="yhkaplan.github.io/index.xml" rel="self" type="application/rss+xml" />
+    
+    
+    <item>
+      <title>Code Generation in Swift: Part 1</title>
+      <link>yhkaplan.github.io/post/code-generation-in-swift-1/</link>
+      <pubDate>Sat, 07 Jul 2018 12:18:28 +0900</pubDate>
+      
+      <guid>yhkaplan.github.io/post/code-generation-in-swift-1/</guid>
+      <description>This entry is the first in a series that I plan on writing about code generation in Swift.
+Example Code public struct LowerLabelSettings: Label, Equatable { public var text: String? public var layout: LowerLabelLayout public var textSettings: TextSettings public init( text: String? = nil, layout: LowerLabelLayout = LowerLabelLayout(), textSettings: TextSettings = TextSettings() ) { self.text = text self.layout = layout self.textSettings = textSettings } } Generated Code import Quick import Nimble @testable import MoonWalker class LowerLabelLayoutTests: QuickSpec { override func spec() { describe(&amp;#34;LowerLabelLayoutTests&amp;#34;) { let leadingConstant = generateRandomCGFloat() let trailingConstant = generateRandomCGFloat() let bottomConstant = generateRandomCGFloat() let height = generateRandomCGFloat() let sut = LowerLabelLayout( leadingConstant: leadingConstant, trailingConstant: trailingConstant, bottomConstant: bottomConstant, height: height ) it(&amp;#34;leadingConstant is set&amp;#34;) { let expected = leadingConstant let tested = sut.</description>
+    </item>
+    
+  </channel>
+</rss>
